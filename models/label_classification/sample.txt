@@ -1,0 +1,11 @@
+"i am a girl"
+
+input_ids [256]
+attn_mask [256]
+token_type_ids [256]
+
+input_ids [1,256]
+attn_mask [1,256]
+token_type_ids [1,256]
+
+
