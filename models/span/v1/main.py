@@ -42,21 +42,26 @@ scheduler = get_linear_schedule_with_warmup(optimizer,
 final_loss=0
 Model.train()
 train_loss=[]
-# Model.load_state_dict(torch.load('Model-recent.pth'))
-for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
-    optimizer.zero_grad()
-    loss=Model(data)
-    loss.backward()
-    optimizer.step()
-    scheduler.step()
-    final_loss+=loss.item()
-    train_loss.append(loss.item())
-    # print(f"[***]Model output of batch {i} with loss {loss}")
-    with open("Train_loss.csv", 'a', newline='') as csv_file:
-        csv_writer = csv.writer(csv_file)
-        csv_writer.writerow([i,loss.item()])
-    if i%50==0:
-        torch.save(Model.state_dict(), 'Model-recent.pth')
+Model.load_state_dict(torch.load('Model-recent.pth'))
+for epoch in range(config.EPOCH):
+    final_loss=0
+
+    for i, data in tqdm(enumerate(data_loader), total=len(data_loader)):
+        optimizer.zero_grad()
+        loss=Model(data)
+        loss.backward()
+        optimizer.step()
+        scheduler.step()
+        final_loss+=loss.item()
+        train_loss.append(loss.item())
+        # print(f"[***]Model output of batch {i} with loss {loss}")
+        with open("Train_loss.csv", 'a', newline='') as csv_file:
+            csv_writer = csv.writer(csv_file)
+            csv_writer.writerow([i,loss.item()])
+        if i%50==0:
+            torch.save(Model.state_dict(), 'Model-recent.pth')
+
+    
 
 # print("[++++]Predecting...")
 # for batch in data_loader:

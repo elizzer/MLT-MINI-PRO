@@ -3,7 +3,7 @@ import transformers
 MODEL_NAME="bert-base-uncased"
 MAX_LEN=256
 MODEL_PATH='model.bin'
-EPOCH=20
+EPOCH=1
 TOKENIZER=transformers.BertTokenizer.from_pretrained(
     "bert-base-uncased",
     do_lower_case=True
